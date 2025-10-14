@@ -19,7 +19,23 @@ export class DatabasePostgres{
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await sql`
-        INSERT INTO users (id, name, email, password) VALUES (${userId}, ${name})
-        `
+        INSERT INTO users (id, name, email, password) VALUES (${userId}, ${name}, ${email}, ${hashedPassword});
+        `;
+    }
+    async findByEmail(){
+        const result = await sql `SELECT * FROM users WHERE email = ${email};`;
+        return result [0];
+    }
+
+    async update(id, user){
+        const { name, email } = user;
+        await sql `
+        UPDATE users
+        SET name = ${name}, email = ${email}
+        WHERE id = ${id}`
+    }
+    async delete (id){
+        await sql `DELETE FROM users WHERE id = ${id}`;
+        
     }
 }

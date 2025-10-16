@@ -1,5 +1,5 @@
 import { random } from "node:crypto"
-import { sql } from "./sql.js"
+import { sql } from "./backend/sql.js"
 import bcrypt from "bcrypt"
 
 export class DatabasePostgres{

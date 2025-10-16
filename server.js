@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors"; 
-import { DatabasePostgres } from "./databasePostgres";
+import { DatabasePostgres } from "./databasePostgres.js";
 import "./createTable.js";
 import bcrypt from "jsonwebtoken";
 import jwt from "jsonwebtoken";
@@ -55,4 +55,22 @@ app.post('/auth/login', async(req, res) => {
         token,
         user: { id: user.id, name: user.name, email: user.email}
     });
+});
+
+app.get('/projected', (req,res) => {
+    const authHeader = req.headers.authorization;
+    if(!authHeader) return res.status(401).json({ msg: 'token nao oferecido! '});
+
+    const token = authHeader.split('')[1];
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'MinhaChaveSuperSecreta');
+        res.json({ msg: 'Acesso autorizado!'}, decoded);
+    }catch(err){
+        res.status(401).json({ msg: 'token Invalido! '});
+    }
+});
+
+app.get('/users', async (req, res) => {
+    const users = await database.list();
+    res.json(users);
 })

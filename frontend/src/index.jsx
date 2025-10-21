@@ -1,10 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './main/App';
-//import registerServiceWorker from './registerServiceWorker'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import './App.css';
 
-const root = ReactDOM.createRoot(document.createElementById('root'));
-root.render(<App />);
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from '../auth/AuthContext';
+import PrivateRoute from '../auth/PrivateRoute';
 
-//registerServiceWorker();
+import Logo from '../componentes/templates/logo'
+import Nav from '../componentes/templates/Nav'
+
+import Login from '../components'
